@@ -1,3 +1,5 @@
+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
+
 Sử dụng `async` trong Playwright (hoặc bất kỳ thư viện bất đồng bộ nào) có thể giúp tăng hiệu suất trong một số trường hợp, nhưng có một số yếu tố cần xem xét để xác định xem nó có thực sự "nhanh" hay không. Dưới đây là một số điểm quan trọng:
 
 ### 1. Lợi Ích của Bất Đồng Bộ (Asynchronous)
