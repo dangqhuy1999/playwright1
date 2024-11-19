@@ -1,3 +1,4 @@
+import csv
 import time
 import asyncio
 import traceback
@@ -6,7 +7,7 @@ from playwright.async_api import async_playwright, TimeoutError
 
 
 async def navigate_and_close(page):
-    await page.goto('https://www.beinglab-usa.com/lab-equipment/product/forced-air-drying-oven-19?category=2&t=oven-page', timeout=60000)
+    await page.goto('https://www.beinglab-usa.com/lab-equipment/product/86c-ultra-low-temperature-freezer-44', timeout=60000)
     close_button = await page.wait_for_selector('//button[@title="Close"]', timeout=60000)
 
     await close_button.click()
@@ -38,17 +39,18 @@ async def run():
 
             hrefs = [f"https://www.beinglab-usa.com{link.get('href')}" for link in links]
             print(f'{_id_img}:\n {hrefs}')
+            
             #process ShippingInfo <div class="tab-pane fade" id="shipping">
             shipping = tree.xpath("//div[starts-with(@class,'tab-pane fade') and @id='shipping']")
             ones = shipping[0].xpath(".//div[@class='shubh']")
-
+            full = []
             for one in ones:
                 _id_ship = one.get('id')
                 if _id_ship != _id_img:
                     continue
                 rows = one.xpath(".//tr")
                 flag = 0
-                full = []
+                
                 header_omit = []
                 for row in rows:
                     headers = row.xpath('.//th')
@@ -68,9 +70,10 @@ async def run():
                                full.append(alter)
                                header_omit.clear()
                 print(f'{_id_ship}: {full}')
-# process tab3primary <div class="tab-pane fade" id="shipping">
+            # process tab3primary <div class="tab-pane fade" id="shipping">
             tab3primary = tree.xpath("//div[starts-with(@class,'tab-pane fade') and @id='tab3primary']")
             ones = tab3primary[0].xpath(".//div[@class='shubh']")
+            cleaned_data = []
             for one in ones:
                 _id_tab3 = one.get('id')
                 if _id_tab3 != _id_img:
@@ -84,12 +87,13 @@ async def run():
             # process tab1primary <div class="tab-pane fade" id="shipping">
             tab1primary = tree.xpath("//div[starts-with(@class,'tab-pane fade') and @id='tab1primary']") 
             ones = tab1primary[0].xpath(".//span[@class='shubh']")
+            dicton = {}
             for one in ones:
                 _id_tab1 = one.get('id')
                 if _id_tab1 != _id_img:
                     continue
                 datas = one.xpath('.//tr')
-                dicton = {}
+                
                 for data in datas:
                     th_tag = ' '.join(data.xpath('.//th')[0].text_content().split()).strip()
                     td_tags = data.xpath('.//td/p')
@@ -102,35 +106,36 @@ async def run():
                         dicton[th_tag] = [toyy]
                         
                 print(f'{_id_tab1}: {dicton}')
-                # process documents <div class="tab-pane fade" id="documents">
-                documents = tree.xpath("//div[starts-with(@class,'tab-pane fade') and @id='documents']") 
-                filenames = documents[0].xpath('.//a[@target="_"]')
-                arr = {}
-                for filename in filenames:
-                    link = filename.get('href')
-                    name = ' '.join(filename[0].text_content().split()).strip()
-                    arr[link] = [name]
-                print(f'{arr}')
-                # process faqs <div class="tab-pane fade" id="faqs">
-                faqs = tree.xpath("//div[starts-with(@class,'tab-pane fade') and @id='faqs']") 
-                questions = faqs[0].xpath('.//div[@class="card-header"]')
-                answers = faqs[0].xpath('.//div[@class="collapse"]')
-                list_qa = {}
-                len_q = len(questions)
-                for qa in range (0,len_q):
-                    key = ' '.join(questions[qa].text_content().split()).strip()
-                    value = ' '.join(answers[qa].text_content().split()).strip()
-                    list_qa[key] = value
-                print(list_qa)
-                # process tab4primary <div class="tab-pane fade" id="tab4primary">                 
-                tab4primary = tree.xpath("//div[starts-with(@class,'tab-pane fade') and @id='tab4primary']")
-                imgs = tab4primary[0].xpath('.//span[@class="shubh"]/img')
-                arr_imgs = []
-                for img in imgs:
-                    arr_imgs.append(f"https://www.beinglab-usa.com{img.get('src')}") 
-                print(arr_imgs)
-                with open(f'{arr1[i]}.txt','w',encoding = 'utf-8') as file:
-                    file.write(content)
-                i+=1
-
+            # process documents <div class="tab-pane fade" id="documents">
+            documents = tree.xpath("//div[starts-with(@class,'tab-pane fade') and @id='documents']") 
+            filenames = documents[0].xpath('.//a[@target="_"]')
+            arr = {}
+            for filename in filenames:
+                link = filename.get('href')
+                name = ' '.join(filename[0].text_content().split()).strip()
+                arr[link] = [name]
+            print(f'{arr}')
+            # process faqs <div class="tab-pane fade" id="faqs">
+            faqs = tree.xpath("//div[starts-with(@class,'tab-pane fade') and @id='faqs']") 
+            questions = faqs[0].xpath('.//div[@class="card-header"]')
+            answers = faqs[0].xpath('.//div[@class="collapse"]')
+            list_qa = {}
+            len_q = len(questions)
+            for qa in range (0,len_q):
+                key = ' '.join(questions[qa].text_content().split()).strip()
+                value = ' '.join(answers[qa].text_content().split()).strip()
+                list_qa[key] = value
+            print(list_qa)
+            # process tab4primary <div class="tab-pane fade" id="tab4primary">                 
+            tab4primary = tree.xpath("//div[starts-with(@class,'tab-pane fade') and @id='tab4primary']")
+            imgs = tab4primary[0].xpath(f'.//span[@class="shubh" and @id="{_id_img}"]/img')
+            arr_imgs = f"https://www.beinglab-usa.com{imgs[0].get('src')}"
+            print(arr_imgs)
+            with open('file.csv',mode='a',newline='', encoding='utf-8') as file:
+                writer = csv.writer(file)
+                writer.writerow([f'{_id_img}',f'{hrefs}',f'{full}',f'{cleaned_data}',f'{dicton}',f'{arr}',f'{list_qa}',f'{arr_imgs}'])	
+            with open(f'{arr1[i]}.txt','w',encoding = 'utf-8') as file:
+                file.write(content)
+            i+=1
+            
 asyncio.run(run())
