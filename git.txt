@@ -1,0 +1,361 @@
+# Git Tutorial: Push and Pull (Part 1)
+
+In this tutorial, we'll explore the basic commands for pushing and pulling changes in Git. These commands are essential for collaborating with others in a Git repository.
+
+## Prerequisites
+
+Before we start, ensure you have:
+
+1. **Git installed** on your machine.
+2. A **GitHub or GitLab account** (or any other Git hosting service).
+3. A **repository** to work with. You can create a new one or clone an existing repository.
+
+## 1. Setting Up Your Repository
+
+### Cloning a Repository
+
+If you want to work on an existing repository, you can clone it using:
+
+```bash
+git clone <repository-url>
+```
+
+Replace `<repository-url>` with the URL of the repository you want to clone.
+
+### Creating a New Repository
+
+To create a new repository:
+
+1. Navigate to your project directory:
+   ```bash
+   mkdir my-project
+   cd my-project
+   ```
+
+2. Initialize a new Git repository:
+   ```bash
+   git init
+   ```
+
+## 2. Making Changes
+
+After setting up your repository:
+
+1. **Create or modify files** in your project.
+2. **Check the status** of your repository:
+   ```bash
+   git status
+   ```
+
+3. **Stage your changes**:
+   ```bash
+   git add <file-name>
+   ```
+   To stage all changes, use:
+   ```bash
+   git add .
+   ```
+
+## 3. Committing Changes
+
+Once your changes are staged, commit them with a message:
+
+```bash
+git commit -m "Your commit message"
+```
+
+## 4. Pushing Changes
+
+### Pushing to a Remote Repository
+
+To push your local commits to a remote repository, use:
+
+```bash
+git push origin <branch-name>
+```
+
+Replace `<branch-name>` with the name of the branch you want to push to (e.g., `main` or `master`).
+
+### Example:
+
+```bash
+git push origin main
+```
+
+## 5. Pulling Changes
+
+### Pulling from a Remote Repository
+
+To update your local repository with changes from the remote repository, use:
+
+```bash
+git pull origin <branch-name>
+```
+
+### Example:
+
+```bash
+git pull origin main
+```
+
+This command fetches the latest changes from the remote branch and merges them into your local branch.
+
+## Summary
+
+In this part of the tutorial, we covered the basics of pushing and pulling changes in Git. We learned how to:
+
+- Clone and initialize a repository.
+- Stage and commit changes.
+- Push local commits to a remote repository.
+- Pull updates from a remote repository.
+
+In the next part, we will explore more advanced topics, including resolving conflicts and managing branches. Stay tuned!
+##################################
+
+
+# Git Tutorial: Push and Pull (Part 2)
+
+In this part of the Git tutorial, we will dive deeper into advanced topics such as resolving merge conflicts, managing branches, and understanding remote repositories.
+
+## 1. Branching Basics
+
+Branches allow you to work on different features or bug fixes independently. Here’s how to manage branches in Git.
+
+### Creating a New Branch
+
+To create a new branch, use:
+
+```bash
+git branch <branch-name>
+```
+
+### Switching to a Branch
+
+To switch to your new branch, use:
+
+```bash
+git checkout <branch-name>
+```
+
+Alternatively, you can create and switch to a new branch in one command:
+
+```bash
+git checkout -b <branch-name>
+```
+
+### Listing Branches
+
+To see a list of all branches in your repository, use:
+
+```bash
+git branch
+```
+
+## 2. Merging Branches
+
+Once you have completed work on a branch, you may want to merge it back into the main branch.
+
+### Switching to the Main Branch
+
+First, switch back to the main branch:
+
+```bash
+git checkout main
+```
+
+### Merging
+
+To merge the changes from your feature branch into the main branch:
+
+```bash
+git merge <branch-name>
+```
+
+### Example:
+
+```bash
+git merge feature-branch
+```
+
+## 3. Resolving Merge Conflicts
+
+Sometimes, when you merge branches, you might encounter conflicts if changes were made to the same line in both branches.
+
+### Identifying Conflicts
+
+Git will indicate which files have conflicts. You can check the status:
+
+```bash
+git status
+```
+
+### Resolving Conflicts
+
+1. Open the files with conflicts. Git will mark the conflicting areas within the file.
+2. Edit the files to resolve the conflicts.
+3. Once resolved, stage the changes:
+
+   ```bash
+   git add <file-name>
+   ```
+
+4. Finally, commit the merge:
+
+   ```bash
+   git commit -m "Resolved merge conflicts"
+   ```
+
+## 4. Pushing and Pulling with Branches
+
+### Pushing a Branch
+
+To push your newly created branch to the remote repository for the first time, use:
+
+```bash
+git push -u origin <branch-name>
+```
+
+The `-u` flag sets the upstream reference, allowing you to use `git push` and `git pull` without specifying the remote and branch in the future.
+
+### Pulling Changes from a Remote Branch
+
+If you’re working with a team, you may want to frequently pull changes from the remote repository:
+
+```bash
+git pull origin <branch-name>
+```
+
+## 5. Deleting Branches
+
+Once a branch has been merged and is no longer needed, you can delete it:
+
+### Deleting a Local Branch
+
+```bash
+git branch -d <branch-name>
+```
+
+### Deleting a Remote Branch
+
+To delete a branch from the remote repository:
+
+```bash
+git push origin --delete <branch-name>
+```
+
+## Summary
+
+In this part of the tutorial, we covered:
+
+- Creating and managing branches.
+- Merging branches and resolving merge conflicts.
+- Pushing and pulling changes across branches.
+- Deleting branches when they are no longer needed.
+
+In the next part, we will explore more advanced topics such as rebasing, stashing changes, and working with remote repositories. Stay tuned!
+#####################################
+The error message you're encountering indicates that Git can't find the remote repository named `origin`. This can happen for a few reasons. Here’s how to troubleshoot and resolve the issue:
+
+## 1. Check Remote Repository Configuration
+
+First, check if you have a remote repository configured:
+
+```bash
+git remote -v
+```
+
+This command will list all the remote repositories linked to your local repository. If `origin` does not appear in the list, you need to add it.
+
+## 2. Adding a Remote Repository
+
+If `origin` is missing, you can add it using the following command:
+
+```bash
+git remote add origin <repository-url>
+```
+
+Replace `<repository-url>` with the URL of your remote repository (e.g., from GitHub, GitLab, etc.). Here’s an example for a GitHub repository:
+
+```bash
+git remote add origin https://github.com/username/repository.git
+```
+
+## 3. Verify the Remote URL
+
+After adding the remote, verify it again:
+
+```bash
+git remote -v
+```
+
+You should now see `origin` listed with the correct URL.
+
+## 4. Pushing Your Changes
+
+Once the remote is added, try pushing your changes again:
+
+```bash
+git push -u origin main
+```
+
+## 5. Check Your Access Rights
+
+If you still encounter issues, ensure that:
+
+- You have the correct access rights to the repository (you need to be a collaborator or the owner).
+- You are authenticated properly if using HTTPS (you may need to enter your username and password or use a personal access token).
+- If using SSH, ensure your SSH key is added to your GitHub or GitLab account and that you're using the correct SSH URL.
+
+## Summary
+
+1. Check the current remotes with `git remote -v`.
+2. Add the remote if it doesn't exist using `git remote add origin <repository-url>`.
+3. Verify the remote URL again.
+4. Attempt to push your changes.
+
+If you follow these steps, you should be able to resolve the issue and successfully push your changes to the remote repository.
+
+
+
+################Save push 
+Việc bạn phải nhập lại username và password mỗi khi thực hiện lệnh `git push origin main` có thể do một số lý do sau:
+
+### 1. **Không lưu thông tin đăng nhập**
+Khi bạn sử dụng HTTPS để kết nối với GitHub, Git sẽ yêu cầu bạn nhập thông tin đăng nhập mỗi lần nếu bạn không lưu thông tin đó. Để khắc phục, bạn có thể thiết lập Git để lưu thông tin đăng nhập.
+
+### 2. **Thiết lập Credential Helper**
+Bạn có thể sử dụng `credential helper` để lưu thông tin đăng nhập. Thực hiện lệnh sau trong terminal:
+
+```bash
+git config --global credential.helper cache
+```
+
+Điều này sẽ lưu thông tin đăng nhập của bạn trong một khoảng thời gian nhất định (mặc định là 15 phút).
+
+Nếu bạn muốn lưu vĩnh viễn thông tin đăng nhập, hãy thay thế bằng:
+
+```bash
+git config --global credential.helper store
+```
+
+### 3. **Sử dụng SSH thay vì HTTPS**
+Nếu bạn không muốn nhập thông tin đăng nhập, bạn có thể chuyển sang sử dụng SSH thay vì HTTPS. Để làm điều này:
+
+1. Tạo một key SSH (nếu bạn chưa có):
+   ```bash
+   ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+   ```
+
+2. Thêm SSH key vào GitHub:
+   - Sao chép key vào clipboard:
+     ```bash
+     cat ~/.ssh/id_rsa.pub
+     ```
+   - Đăng nhập vào GitHub và thêm SSH key vào tài khoản của bạn.
+
+3. Thay đổi remote URL trong repository của bạn:
+   ```bash
+   git remote set-url origin git@github.com:dangqhuy1999/playwright1.git
+   ```
+
+Sau khi thực hiện các bước này, bạn sẽ không cần nhập username và password mỗi lần push nữa.
