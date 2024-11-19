@@ -11,7 +11,7 @@ async def load_page(url):
     
     #processing
     print(await page.content())
-    #toi comment ne tui nua 
+    #toi comment ne tui nuafdfdf 
     await browser.close()
 
 async def read_urls_from_file(filename):
