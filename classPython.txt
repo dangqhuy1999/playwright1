@@ -1,0 +1,24 @@
+class python: 
+
+  Inheritance 
+  Encapsulation
+  Composition
+  Polymorphism
+  Data Abstraction
+
+Code: 
+
+  Inheritance:
+
+```
+class Animal:
+  def __init__(self, name):
+    self.name = name
+  def sounds(self):
+    print('hihi')
+class Bird(Animal):
+  def __init__(self, name, age):
+    super().__init__(name)
+    self.age = age
+
+```
