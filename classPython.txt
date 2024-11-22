@@ -5,12 +5,46 @@ class python:
   Composition
   Polymorphism
   Data Abstraction
-
+	
 Code: 
 
   Inheritance:
 
 ```
+Composition
+
+class Animal:
+  def __init__(self, name):
+    self._name = name
+  def begin(self):
+    return f'{self._name} is flying'
+class Bird: 
+  def __init__(self , swing, animal):
+    self._swing = swing
+    self.animal = animal
+  def actionchain(self):
+    return f' i have two {self._swing}, and i see {self.animal.begin()}'
+
+eagle = Animal('Eagle')
+
+sparrow = Bird('COLOPA', eagle)
+sparrow.actionchain()
+
+Encapsulation
+
+class Animal:
+  def __init__(self, name):
+    self._name = name
+
+  @property
+  def name(self):
+    return self.name 
+  @name.setter
+  def name(self, value):
+    self.name = value
+  
+Inherritate
+
 class Animal:
   def __init__(self, name):
     self.name = name
@@ -21,4 +55,26 @@ class Bird(Animal):
     super().__init__(name)
     self.age = age
 
+Polymophism
+
+from abc import ABC, abstractmethod
+
+class Animal(ABC):
+  @abtractmethod
+  def spark():
+    pass
+class Dog(Animal):
+  def spark():
+    return 'Gau Gau'
+class Cat(Animal):
+  def spark():
+    return 'Meow Meow'
+
+def sparkAnimal(animal: Animal):
+  print(animal.spark())
+
+meo = Cat()
+gau = Dog()
+sparkAnimal(meo)
+sparkAnimal(gau)
 ```
