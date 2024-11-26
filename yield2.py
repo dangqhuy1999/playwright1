@@ -1,4 +1,4 @@
-import time
+mport time
 
 def ham1(n):
   count = 0
