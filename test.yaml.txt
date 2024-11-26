@@ -1,4 +1,0 @@
-sitemap: 
-
-Name: 'huy'
-- Link : www.facebook.com

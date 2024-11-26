@@ -8,3 +8,5 @@ while True:
     utime.sleep(0.1)
     led_onboard.value(0)
     utime.sleep(0.3)
+#https://datasheets.raspberrypi.com/pico/pico-datasheet.pdf
+https://wokwi.com/projects/297322571959894536

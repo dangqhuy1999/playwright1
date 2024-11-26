@@ -1,3 +1,75 @@
+### 3. **Sử dụng SSH thay vì HTTPS**
+Để thiết lập SSH cho GitHub trên Windows và đăng nhập một cách vĩnh viễn, bạn có thể làm theo các bước sau:
+
+### Bước 1: Cài đặt Git
+
+Nếu bạn chưa cài đặt Git trên máy tính của mình, hãy tải và cài đặt Git từ [trang chính thức của Git](https://git-scm.com/download/win).
+
+### Bước 2: Tạo SSH Key
+
+1. **Mở Git Bash**:
+   - Tìm kiếm "Git Bash" trong menu Start và mở nó.
+
+2. **Tạo SSH Key**:
+   - Chạy lệnh sau để tạo một cặp khóa SSH:
+     ```bash
+     ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+     ```
+   - Thay thế `your_email@example.com` bằng email của bạn, mà bạn đã sử dụng để đăng ký GitHub.
+   - Khi được hỏi để lưu khóa, nhấn Enter để sử dụng đường dẫn mặc định (`~/.ssh/id_rsa`).
+
+3. **Nhập mật khẩu (tuỳ chọn)**:
+   - Bạn có thể nhập mật khẩu để bảo vệ khóa, hoặc chỉ cần nhấn Enter để không sử dụng mật khẩu.
+
+### Bước 3: Thêm SSH Key vào SSH-Agent
+
+1. **Khởi động SSH-Agent**:
+   - Chạy lệnh sau trong Git Bash:
+     ```bash
+     eval $(ssh-agent -s)
+     ```
+
+2. **Thêm SSH Key**:
+   - Thêm khóa SSH vào SSH-Agent bằng lệnh sau:
+     ```bash
+     ssh-add ~/.ssh/id_rsa
+     ```
+
+### Bước 4: Thêm SSH Key vào GitHub
+
+1. **Sao chép SSH Key**:
+   - Sử dụng lệnh sau để sao chép nội dung của khóa công khai vào clipboard:
+     ```bash
+     clip < ~/.ssh/id_rsa.pub
+     ```
+
+2. **Đăng nhập vào GitHub**:
+   - Mở trình duyệt và đăng nhập vào tài khoản GitHub của bạn.
+
+3. **Thêm SSH Key**:
+   - Đi tới **Settings** (Cài đặt) > **SSH and GPG keys** > **New SSH key**.
+   - Dán khóa SSH bạn đã sao chép vào ô "Key" và đặt tên cho khóa trong ô "Title".
+   - Nhấn **Add SSH key** để lưu.
+
+### Bước 5: Kiểm tra Kết nối
+
+Để kiểm tra xem bạn đã cấu hình thành công SSH hay chưa, hãy chạy lệnh sau trong Git Bash:
+
+```bash
+ssh -T git@github.com
+```
+
+Nếu mọi thứ hoạt động tốt, bạn sẽ thấy một thông báo như:
+
+```
+Hi username! You've successfully authenticated, but GitHub does not provide shell access.
+```
+
+### Kết luận
+
+Bây giờ bạn đã cấu hình SSH cho GitHub trên Windows và có thể sử dụng Git mà không cần phải nhập thông tin đăng nhập mỗi lần. Nếu bạn có thêm câu hỏi hoặc cần trợ giúp, hãy cho tôi biết!
+######################
+
 # Git Tutorial: Push and Pull (Part 1)
 
 In this tutorial, we'll explore the basic commands for pushing and pulling changes in Git. These commands are essential for collaborating with others in a Git repository.
@@ -338,24 +410,4 @@ Nếu bạn muốn lưu vĩnh viễn thông tin đăng nhập, hãy thay thế b
 git config --global credential.helper store
 ```
 
-### 3. **Sử dụng SSH thay vì HTTPS**
-Nếu bạn không muốn nhập thông tin đăng nhập, bạn có thể chuyển sang sử dụng SSH thay vì HTTPS. Để làm điều này:
 
-1. Tạo một key SSH (nếu bạn chưa có):
-   ```bash
-   ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
-   ```
-
-2. Thêm SSH key vào GitHub:
-   - Sao chép key vào clipboard:
-     ```bash
-     cat ~/.ssh/id_rsa.pub
-     ```
-   - Đăng nhập vào GitHub và thêm SSH key vào tài khoản của bạn.
-
-3. Thay đổi remote URL trong repository của bạn:
-   ```bash
-   git remote set-url origin git@github.com:dangqhuy1999/playwright1.git
-   ```
-
-Sau khi thực hiện các bước này, bạn sẽ không cần nhập username và password mỗi lần push nữa.

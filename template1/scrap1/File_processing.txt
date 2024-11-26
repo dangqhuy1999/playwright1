@@ -1,0 +1,43 @@
+lxml:
+     #process imageLink
+     tree = html.fromstring(content)
+     links = tree.xpath("//div[starts-with(@class, 'slick-slide') and not(contains(@class, 'slick-cloned'))]//a")
+     _id_img = links[0].get('data-fancybox').split('_')[2]
+
+string processing: 
+     arrp.append(' '.join(p.text_content().split()).strip())
+
+csv file processing:
+     Write:
+        with open('file.csv',mode='a',newline='', encoding='utf-8') as file:
+            writer = csv.writer(file)
+            writer.writerows(data)
+     Read:
+        # Open the CSV file for reading
+        with open(input_file, mode='r', newline='') as file:
+            reader = csv.reader(file)
+            for row in reader:
+                print(row)  # Each row is a list of values
+
+json file processing:
+
+import json
+
+	# Load JSON from a file
+	with open('data.json', 'r') as file:
+    	    data = json.load(file)
+	
+ 	# Load JSON from a string
+	json_string = '{"name": "Alice", "age": 30, "city": "New York"}'
+	data = json.loads(json_string)
+
+	print(data)  # Print the loaded JSON data
+
+	# dump data json ra file json
+	string1 = {'a':'av', 'b':'bv'}
+	with open('file1.json','w') as file:
+	  data = json.dump(file, string1)
+
+	#dump data json ra chuỗi string
+	string1 = {'a':'av','b':'bv'}
+	data = json.dumps(string)
