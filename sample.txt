@@ -41,3 +41,11 @@ import json
 	#dump data json ra chuỗi string
 	string1 = {'a':'av','b':'bv'}
 	data = json.dumps(string)
+
+########Read Write file content
+with open('filename.txt', 'r', encoding='utf-8') as file:
+    content = file.read()
+    print(content)
+with open('filename.txt', 'w', encoding='utf-8') as file:
+    file.write(content)
+    print(content)

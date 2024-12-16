@@ -411,3 +411,22 @@ git config --global credential.helper store
 ```
 
 
+
+#############Trường hợp lộ file thông tin nhạy cảm lên git
+git pull  # kéo code về 
+#xóa file nhạy cảm đi
+git add . 
+git commit -m '121224_clear2'
+
+#filter
+git filter-branch --force --index-filter "git rm --cached --ignore-unmatch ./mailScrapy/main.py" --prune-empty --tag-name-filter cat -- --all
+
+git log
+echo "./mailScrapy/main.py" >> .gitignore
+git status
+git add .gitignore
+git commit  -m 'addgitignore'
+git status
+git push origin --force --all
+git push origin --force --tags
+##############################
